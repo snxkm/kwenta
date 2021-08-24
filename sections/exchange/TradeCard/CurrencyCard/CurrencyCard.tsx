@@ -1,4 +1,4 @@
-import { FC, MouseEvent, ReactNode, useMemo } from 'react';
+import { FC, ReactNode, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 import { Svg } from 'react-optimized-image';
@@ -10,7 +10,6 @@ import CaretDownIcon from 'assets/svg/app/caret-down.svg';
 
 import { formatCurrency, formatPercent, zeroBN } from 'utils/formatters/number';
 
-import Card from 'components/Card';
 import NumericInput from 'components/Input/NumericInput';
 import Loader from 'components/Loader';
 
@@ -20,6 +19,14 @@ import { Side } from '../types';
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 import { TxProvider } from 'sections/shared/modals/TxConfirmationModal/TxConfirmationModal';
 import Wei, { wei } from '@synthetixio/wei';
+
+// Styles
+import {
+	CurrencySelector,
+	CurrencyWalletBalanceContainer,
+	StyledCard,
+	StyledCardBody,
+} from './styles';
 
 type CurrencyCardProps = {
 	side: Side;
@@ -153,63 +160,13 @@ const CurrencyCard: FC<CurrencyCardProps> = ({
 	);
 };
 
-const StyledCard = styled(Card)<{ interactive?: boolean }>`
-	${(props) =>
-		!props.interactive &&
-		css`
-			pointer-events: none;
-		`}
-`;
-
-const StyledCardBody = styled(Card.Body)`
-	padding: 11px 30px;
-`;
-
 const LabelContainer = styled.div`
 	padding-bottom: 2px;
 	text-transform: capitalize;
 `;
 
-const CurrencyWalletBalanceContainer = styled.div``;
-
 const CurrencyContainer = styled(FlexDivRowCentered)`
 	padding-bottom: 6px;
-`;
-
-const CurrencySelector = styled.div<{
-	currencyKeySelected: boolean;
-	onClick: ((event: MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined;
-	interactive?: boolean;
-}>`
-	display: grid;
-	align-items: center;
-	grid-auto-flow: column;
-	grid-gap: 9px;
-	margin-right: 20px;
-	font-size: 16px;
-	padding: 4px 10px;
-	margin-left: -10px;
-	font-family: ${(props) => props.theme.fonts.bold};
-	color: ${(props) => props.theme.colors.white};
-	svg {
-		color: ${(props) => props.theme.colors.goldColors.color1};
-	}
-
-	${(props) =>
-		!props.currencyKeySelected &&
-		css`
-			margin: 12px 6px 12px -10px;
-		`};
-
-	${(props) =>
-		props.onClick &&
-		css`
-			&:hover {
-				background-color: ${(props) => props.theme.colors.black};
-				border-radius: 100px;
-				cursor: pointer;
-			}
-		`};
 `;
 
 const CurrencyAmountContainer = styled.div<{ disableInput?: boolean }>`

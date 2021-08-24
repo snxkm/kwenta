@@ -5,13 +5,13 @@ import styled from 'styled-components';
 
 import HomeLayout from 'sections/shared/Layout/HomeLayout';
 
-import Hero from 'sections/homepage/Hero';
 import Assets from 'sections/homepage/Assets';
-import Features from 'sections/homepage/Features';
 import Benefits from 'sections/homepage/Benefits';
-import Steps from 'sections/homepage/Steps';
-import FAQ from 'sections/homepage/FAQ';
 import ChartBanner from 'sections/homepage/ChartBanner';
+import FAQ from 'sections/homepage/FAQ';
+import Features from 'sections/homepage/Features';
+import Steps from 'sections/homepage/Steps';
+import SynthSwap from 'sections/homepage/SynthSwap';
 import WithHomepageContainers from 'sections/homepage/containers';
 import L2 from 'sections/homepage/L2';
 
@@ -27,7 +27,7 @@ const HomePage = () => {
 				<HomeLayout>
 					<DarkContainer>
 						<Container>
-							<Hero />
+							<SynthSwap />
 							<Assets />
 							<Features />
 							<L2 />
