@@ -1,15 +1,48 @@
 // Vendor
-import { MouseEvent } from 'react';
-
 import styled, { css } from 'styled-components';
+import { MouseEvent } from 'react';
 
 // Internal
 import Card from 'components/Card';
+import NumericInput from 'components/Input/NumericInput';
+import { numericValueCSS } from 'styles/common';
+
+import { FlexDivRowCentered } from 'styles/common';
+
+export const CurrencyAmount = styled(NumericInput)`
+	font-size: 16px;
+	border: 0;
+	height: 30px;
+`;
+
+export const CurrencyAmountValue = styled.div`
+	${numericValueCSS};
+	padding: 0px 8px 2px 8px;
+	font-size: 10px;
+	width: 150px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+`;
+
+export const CurrencyAmountContainer = styled.div<{ disableInput?: boolean }>`
+	background-color: ${(props) => props.theme.colors.black};
+	border-radius: 4px;
+	width: 100%;
+	position: relative;
+	${(props) =>
+		props.disableInput &&
+		css`
+			pointer-events: none;
+		`}
+`;
+
+export const CurrencyContainer = styled(FlexDivRowCentered)`
+	padding-bottom: 6px;
+`;
 
 export const CurrencySelector = styled.div<{
-	currencyKeySelected: boolean;
+	isCurrencyKeySelected: boolean;
 	onClick: ((event: MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined;
-	interactive?: boolean;
 }>`
 	display: grid;
 	align-items: center;
@@ -26,7 +59,7 @@ export const CurrencySelector = styled.div<{
 	}
 
 	${(props) =>
-		!props.currencyKeySelected &&
+		!props.isCurrencyKeySelected &&
 		css`
 			margin: 12px 6px 12px -10px;
 		`};

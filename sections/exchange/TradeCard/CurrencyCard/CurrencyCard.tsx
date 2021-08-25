@@ -10,7 +10,6 @@ import CaretDownIcon from 'assets/svg/app/caret-down.svg';
 
 import { formatCurrency, formatPercent, zeroBN } from 'utils/formatters/number';
 
-import NumericInput from 'components/Input/NumericInput';
 import Loader from 'components/Loader';
 
 import { FlexDivRowCentered, numericValueCSS, CapitalizedText } from 'styles/common';
@@ -22,6 +21,10 @@ import Wei, { wei } from '@synthetixio/wei';
 
 // Styles
 import {
+	CurrencyAmount,
+	CurrencyAmountContainer,
+	CurrencyAmountValue,
+	CurrencyContainer,
 	CurrencySelector,
 	CurrencyWalletBalanceContainer,
 	StyledCard,
@@ -47,20 +50,20 @@ type CurrencyCardProps = {
 };
 
 const CurrencyCard: FC<CurrencyCardProps> = ({
-	side,
-	currencyKey,
 	amount,
-	slippagePercent,
+	disableInput = false,
+	currencyKey,
+	interactive = true,
+	isLoading = false,
+	label,
 	onAmountChange,
-	walletBalance,
 	onBalanceClick,
 	onCurrencySelect,
 	priceRate,
-	label,
-	interactive = true,
-	disableInput = false,
-	isLoading = false,
+	side,
+	slippagePercent,
 	txProvider = 'synthetix',
+	walletBalance,
 	...rest
 }) => {
 	const { t } = useTranslation();
@@ -85,7 +88,7 @@ const CurrencyCard: FC<CurrencyCardProps> = ({
 		tradeAmount = getPriceAtCurrentRate(tradeAmount);
 	}
 
-	const currencyKeySelected = currencyKey != null;
+	const isCurrencyKeySelected = currencyKey != null;
 	const hasCurrencySelectCallback = onCurrencySelect != null;
 
 	return (
@@ -99,10 +102,9 @@ const CurrencyCard: FC<CurrencyCardProps> = ({
 				<CurrencyWalletBalanceContainer className="currency-wallet-container">
 					<CurrencyContainer className="currency-container">
 						<CurrencySelector
-							currencyKeySelected={currencyKeySelected}
+							isCurrencyKeySelected={isCurrencyKeySelected}
 							onClick={hasCurrencySelectCallback ? onCurrencySelect : undefined}
 							role="button"
-							data-testid="currency-selector"
 						>
 							{currencyKey ?? (
 								<CapitalizedText>
@@ -113,7 +115,7 @@ const CurrencyCard: FC<CurrencyCardProps> = ({
 							)}{' '}
 							{hasCurrencySelectCallback && <Svg src={CaretDownIcon} />}
 						</CurrencySelector>
-						{currencyKeySelected && (
+						{isCurrencyKeySelected && (
 							<CurrencyAmountContainer
 								className="currency-amount-container"
 								disableInput={disableInput}
@@ -163,37 +165,6 @@ const CurrencyCard: FC<CurrencyCardProps> = ({
 const LabelContainer = styled.div`
 	padding-bottom: 2px;
 	text-transform: capitalize;
-`;
-
-const CurrencyContainer = styled(FlexDivRowCentered)`
-	padding-bottom: 6px;
-`;
-
-const CurrencyAmountContainer = styled.div<{ disableInput?: boolean }>`
-	background-color: ${(props) => props.theme.colors.black};
-	border-radius: 4px;
-	width: 100%;
-	position: relative;
-	${(props) =>
-		props.disableInput &&
-		css`
-			pointer-events: none;
-		`}
-`;
-
-const CurrencyAmount = styled(NumericInput)`
-	font-size: 16px;
-	border: 0;
-	height: 30px;
-`;
-
-const CurrencyAmountValue = styled.div`
-	${numericValueCSS};
-	padding: 0px 8px 2px 8px;
-	font-size: 10px;
-	width: 150px;
-	overflow: hidden;
-	text-overflow: ellipsis;
 `;
 
 const Slippage = styled.div`

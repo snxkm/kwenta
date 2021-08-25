@@ -87,6 +87,8 @@ import useSynthetixQueries from '@synthetixio/queries';
 import { wei } from '@synthetixio/wei';
 import Connector from 'containers/Connector';
 
+import SynthSwapCurrencyCard from '../TradeCard/SynthSwapCurrencyCard';
+
 type ExchangeCardProps = {
 	defaultBaseCurrencyKey?: string | null;
 	defaultQuoteCurrencyKey?: string | null;
@@ -143,6 +145,7 @@ const useExchange = ({
 		defaultBaseCurrencyKey,
 		defaultQuoteCurrencyKey,
 	});
+
 	const [isApproving, setIsApproving] = useState<boolean>(false);
 	const [isApproved, setIsApproved] = useState<boolean>(false);
 	const [baseCurrencyAmount, setBaseCurrencyAmount] = useState<string>('');
@@ -904,6 +907,7 @@ const useExchange = ({
 			)}
 		</>
 	);
+
 	const quotePriceChartCard =
 		txProvider === 'synthetix' && showPriceCard ? (
 			<PriceChartCard
@@ -1149,6 +1153,99 @@ const useExchange = ({
 		</>
 	);
 
+	const synthSwapQuoteCurrencyCard = (
+		<>
+			<SynthSwapCurrencyCard
+				side="quote"
+				currencyKey={quoteCurrencyKey}
+				amount={quoteCurrencyAmount}
+				onAmountChange={async (value: string) => {
+					if (value === '') {
+						resetCurrencies();
+					} else {
+						setQuoteCurrencyAmount(value);
+						if (txProvider === 'synthetix') {
+							const baseCurrencyAmountNoFee = wei(value).mul(rate);
+							const fee = baseCurrencyAmountNoFee.mul(exchangeFeeRate ?? 1);
+							setQuoteCurrencyAmount(baseCurrencyAmountNoFee.sub(fee).toString());
+						}
+					}
+				}}
+				walletBalance={quoteCurrencyBalance}
+				onCurrencySelect={
+					allowQuoteCurrencySelection ? () => setSelectQuoteTokenModalOpen(true) : undefined
+				}
+				priceRate={quotePriceRate}
+			/>
+			{selectQuoteTokenModalOpen && (
+				<SelectTokenModal
+					onDismiss={() => setSelectQuoteTokenModalOpen(false)}
+					onSelect={(currencyKey) => {
+						resetCurrencies();
+						// @ts-ignore
+						setCurrencyPair((pair) => ({
+							base: pair.base === currencyKey ? null : pair.base,
+							quote: currencyKey,
+						}));
+						if (currencyPair.base && currencyPair.base !== currencyKey) {
+							routeToMarketPair(currencyPair.base, currencyKey);
+						}
+					}}
+					tokensToOmit={Object.keys(Synths)}
+				/>
+			)}
+		</>
+	);
+
+	const synthSwapBaseCurrencyCard = (
+		<>
+			<SynthSwapCurrencyCard
+				side="base"
+				currencyKey={baseCurrencyKey}
+				amount={baseCurrencyAmount}
+				onAmountChange={async (value: string) => {
+					if (value === '') {
+						resetCurrencies();
+					} else {
+						setBaseCurrencyAmount(value);
+						if (txProvider === 'synthetix') {
+							const quoteCurrencyAmountNoFee = wei(value).mul(inverseRate);
+							const fee = quoteCurrencyAmountNoFee.mul(exchangeFeeRate ?? 1);
+							setQuoteCurrencyAmount(quoteCurrencyAmountNoFee.add(fee).toString());
+						}
+					}
+				}}
+				walletBalance={baseCurrencyBalance}
+				onCurrencySelect={
+					allowBaseCurrencySelection ? () => setSelectBaseTokenModalOpen(true) : undefined
+				}
+				priceRate={basePriceRate}
+			/>
+			{selectBaseTokenModalOpen && (
+				<SelectCurrencyModal
+					onDismiss={() => setSelectBaseTokenModalOpen(false)}
+					onSelect={(currencyKey) => {
+						resetCurrencies();
+						// @ts-ignore
+						setCurrencyPair((pair) => ({
+							base: currencyKey,
+							quote: pair.quote === currencyKey ? null : pair.quote,
+						}));
+
+						if (currencyPair.quote != null) {
+							if (currencyPair.quote !== currencyKey) {
+								routeToMarketPair(currencyKey, currencyPair.quote);
+							}
+						} else {
+							routeToBaseCurrency(currencyKey);
+						}
+					}}
+					synthsOverride={[Synths.sETH, Synths.sUSD]}
+				/>
+			)}
+		</>
+	);
+
 	return {
 		baseCurrencyCard,
 		baseCurrencyKey,
@@ -1166,6 +1263,9 @@ const useExchange = ({
 		quotePriceChartCard,
 		toggleIsShowingSingleChart,
 		wideWidth,
+		synthSwapQuoteCurrencyCard,
+		synthSwapBaseCurrencyCard,
+		// synthSwapFooterCard,
 	};
 };
 

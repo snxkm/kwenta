@@ -707,5 +707,8 @@
 			"seconds": "s"
 		},
 		"min": "min"
+	},
+	"synthSwap": {
+		"balance": "balance"
 	}
 }

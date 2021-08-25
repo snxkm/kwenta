@@ -1,61 +1,50 @@
 // Vendor
 import React from 'react';
+import { Svg } from 'react-optimized-image';
 
 // Internal
 // import CurrencyCard from 'sections/exchange/TradeCard/CurrencyCard/CurrencyCard';
-
-import {
-	StyledCard,
-	StyledCardBody,
-	CurrencyWalletBalanceContainer,
-} from 'sections/exchange/TradeCard/CurrencyCard/styles';
+import IconArrowDown from 'assets/svg/app/synthswap/arrow-down.svg';
 
 import useExchange from 'sections/exchange/hooks/useExchange';
 
+import { StyledRoot, StyledHorizontalDivider, StyledSVGWrapper } from './styles';
+
 const SynthSwap = () => {
-  const {
-    baseCurrencyCard,
+	const {
 		// baseCurrencyKey,
 		// baseMarketDetailsCard,
 		// basePriceChartCard,
 		// combinedMarketDetailsCard,
 		// combinedPriceChartCard,
 		footerCard,
-		handleCurrencySwap,
+		// handleCurrencySwap,
 		// inverseRate,
 		// isShowingSingleChart,
-		quoteCurrencyCard,
+		// quoteCurrencyCard,
 		// quoteCurrencyKey,
 		// quoteMarketDetailsCard,
 		// quotePriceChartCard,
 		// toggleIsShowingSingleChart,
-		wideWidth,
-
-  } = useExchange({
-    footerCardAttached: true
-  });
+		synthSwapBaseCurrencyCard,
+		synthSwapQuoteCurrencyCard,
+		// wideWidth,
+	} = useExchange({
+		footerCardAttached: true,
+	});
 
 	return (
-    <div>
-      {baseCurrencyCard}
-      {quoteCurrencyCard}
-      {footerCard}
-    </div>
-  )
-  // return (
-	// 	<div>
-	// 		<StyledCard>
-	// 			<StyledCardBody>
-	// 				<CurrencyWalletBalanceContainer>
-  //           Hello
-  //           <CurrencySelector />
-  //         </CurrencyWalletBalanceContainer>
-	// 			</StyledCardBody>
-	// 		</StyledCard>
-	// 		{/* <CurrencyCard interactive side="quote" />
-	// 		<CurrencyCard interactive side="base" /> */}
-	// 	</div>
-	// );
+		<StyledRoot>
+			{synthSwapQuoteCurrencyCard}
+			<StyledHorizontalDivider>
+				<StyledSVGWrapper>
+					<Svg src={IconArrowDown} />
+				</StyledSVGWrapper>
+			</StyledHorizontalDivider>
+			{synthSwapBaseCurrencyCard}
+			{footerCard}
+		</StyledRoot>
+	);
 };
 
 export default SynthSwap;
