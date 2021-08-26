@@ -1,4 +1,9 @@
+// Vendor
 import styled from 'styled-components';
+
+// Internal
+import { SummaryItems } from '../../exchange/FooterCard/common';
+
 // add image gradient border color:
 /*
 border-image-source: linear-gradient(
@@ -16,7 +21,7 @@ export const StyledRoot = styled.div`
 	width: 625px;
 `;
 
-export const StyledHorizontalDivider = styled.div`
+export const StyledCurrencyCardDivider = styled.div`
 	height: 6px;
 	position: relative;
 	width: 100%;
@@ -30,4 +35,21 @@ export const StyledSVGWrapper = styled.button`
 	outline: none;
 	padding: 0;
 	position: absolute;
+`;
+
+export const StyledHorizontalDivider = styled.div`
+	height: 20px;
+	width: 100%;
+`;
+
+export const StyledTradeSummaryContainer = styled.div`
+	background: none;
+	border: 1px solid ${(props) => props.theme.colors.elderberry};
+	border-radius: 4px;
+	height: 76px;
+	width: 100%;
+`;
+
+export const StyledSummaryItems = styled(SummaryItems)`
+	padding: 22px 24px;
 `;

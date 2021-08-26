@@ -10,9 +10,7 @@ import { NO_VALUE } from 'constants/placeholder';
 import { formatCurrency } from 'utils/formatters/number';
 
 // Styles
-// import { S_root } from './styles';
 import { CapitalizedText } from 'styles/common';
-
 import { CurrencyContainer, StyledCard } from '../CurrencyCard/styles';
 
 import {
