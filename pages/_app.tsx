@@ -31,6 +31,7 @@ import Connector from 'containers/Connector';
 
 const InnerApp: FC<AppProps> = ({ Component, pageProps }) => {
 	const { provider, network } = Connector.useContainer();
+	console.log('***provider', provider, 'network', network);
 
 	return (
 		<>

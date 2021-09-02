@@ -88,7 +88,6 @@ import { wei } from '@synthetixio/wei';
 import Connector from 'containers/Connector';
 
 import SynthSwapCurrencyCard from '../TradeCard/SynthSwapCurrencyCard';
-import { MessageContainer } from '../FooterCard/common';
 
 type ExchangeCardProps = {
 	defaultBaseCurrencyKey?: string | null;
@@ -1247,32 +1246,6 @@ const useExchange = ({
 		</>
 	);
 
-	const synthSwapTradeSummaryCard = (
-		<MessageContainer>
-
-			hello
-		</MessageContainer>
-		// <TradeSummaryCard
-		// 	attached={footerCardAttached}
-		// 	submissionDisabledReason={submissionDisabledReason}
-		// 	onSubmit={needsApproval ? (isApproved ? handleSubmit : handleApprove) : handleSubmit}
-		// 	totalTradePrice={baseCurrencyAmount ? totalTradePrice.toString() : null}
-		// 	baseCurrencyAmount={baseCurrencyAmount}
-		// 	basePriceRate={basePriceRate}
-		// 	baseCurrency={baseCurrency}
-		// 	gasPrices={ethGasPriceQuery.data}
-		// 	feeReclaimPeriodInSeconds={feeReclaimPeriodInSeconds}
-		// 	quoteCurrencyKey={quoteCurrencyKey as CurrencyKey}
-		// 	feeRate={exchangeFeeRate}
-		// 	transactionFee={transactionFee}
-		// 	feeCost={feeCost}
-		// 	// show fee's only for "synthetix" (provider)
-		// 	showFee={txProvider === 'synthetix' ? true : false}
-		// 	isApproved={needsApproval ? isApproved : undefined}
-		// 	show1InchProvider={txProvider === '1inch'}
-		// />
-	);
-
 	return {
 		baseCurrencyAmount,
 		baseCurrencyCard,
@@ -1295,7 +1268,6 @@ const useExchange = ({
 		wideWidth,
 		synthSwapBaseCurrencyCard,
 		synthSwapQuoteCurrencyCard,
-		synthSwapTradeSummaryCard,
 		totalTradePrice,
 		transactionFee,
 	};

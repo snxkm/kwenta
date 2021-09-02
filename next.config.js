@@ -1,8 +1,7 @@
 // next.config.js
 
 module.exports = {
-	webpack: (config, options) => {
-
+	webpack: (config) => {
 		config.resolve.mainFields = ['module', 'browser', 'main'];
 
 		config.module.rules.push({

@@ -10,10 +10,11 @@ import useExchange from 'sections/exchange/hooks/useExchange';
 
 import {
 	StyledRoot,
+	StyledButton,
 	StyledCurrencyCardDivider,
 	StyledHorizontalDivider,
 	StyledSummaryItems,
-	StyledSVGWrapper,
+	StyledSVGButton,
 	StyledTradeSummaryContainer,
 } from './styles';
 
@@ -21,7 +22,8 @@ import GasPriceSummaryItem from '../../exchange/FooterCard/TradeSummaryCard/GasP
 import TotalTradePriceSummaryItem from '../../exchange/FooterCard/TradeSummaryCard/TotalTradePriceSummaryItem';
 import FeeRateSummaryItem from '../../exchange/FooterCard/TradeSummaryCard/FeeRateSummaryItem';
 import FeeCostSummaryItem from '../../exchange/FooterCard/TradeSummaryCard/FeeCostSummaryItem';
-import Button from 'components/Button';
+
+import { CapitalizedText } from 'styles/common';
 
 const SynthSwap = () => {
 	const {
@@ -34,7 +36,7 @@ const SynthSwap = () => {
 		gasPrices,
 		isApproved,
 		needsApproval,
-		// handleCurrencySwap,
+		handleCurrencySwap,
 		// inverseRate,
 		// isShowingSingleChart,
 		// quoteCurrencyCard,
@@ -54,7 +56,6 @@ const SynthSwap = () => {
 		footerCardAttached: true,
 	});
 
-
 	/*
  		- i need:
 			onSubmit={}
@@ -67,17 +68,19 @@ const SynthSwap = () => {
 		// might be able to use current logic in useExchange
 	}
 
-
-
 	const onSubmit = needsApproval ? (isApproved ? handleSubmit : handleApprove) : handleSubmit;
 
 	return (
 		<StyledRoot>
 			{synthSwapQuoteCurrencyCard}
 			<StyledCurrencyCardDivider>
-				<StyledSVGWrapper>
+				<StyledSVGButton
+					onClick={() => {
+						handleCurrencySwap();
+						console.log('***clicked');
+					}}>
 					<Svg src={IconArrowDown} />
-				</StyledSVGWrapper>
+				</StyledSVGButton>
 			</StyledCurrencyCardDivider>
 			{synthSwapBaseCurrencyCard}
 			<StyledHorizontalDivider />
@@ -92,7 +95,17 @@ const SynthSwap = () => {
 				</StyledSummaryItems>
 			</StyledTradeSummaryContainer>
 			<StyledHorizontalDivider />
-			<Button onClick={ } />
+			<StyledButton
+				onClick={() => {
+					console.log('***click');
+					onSubmit();
+				}}
+				size="xl"
+				// isActive={true}
+				variant="primary"
+			>
+				<CapitalizedText>Swap</CapitalizedText>
+			</StyledButton>
 		</StyledRoot>
 	);
 };
